@@ -1,9 +1,28 @@
 import { Link } from "react-router-dom";
 import loginImg from "../../assets/images/login/login.svg";
+import { useContext } from "react";
+import AuthProvider from "../../Providers/AuthProvider";
 const Login = () => {
+  const { signIn } = useContext(AuthProvider);
+
   const handleLogin = (event) => {
     event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   };
+
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-row gap-20">
