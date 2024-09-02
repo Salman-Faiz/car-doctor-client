@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const CheckOut = () => {
   const services = useLoaderData();
@@ -34,7 +35,16 @@ const CheckOut = () => {
       body: JSON.stringify(CheckOutOrder),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Your response is being recorded",
+            text: "That thing is still around?",
+            icon: "question",
+          });
+        }
+      });
   };
   return (
     <div>
